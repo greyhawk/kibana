@@ -26,9 +26,9 @@ RUN set -x \
 	&& chown -R kibana:kibana /opt/kibana \
 	&& rm kibana.tar.gz
 
-RUN kibana plugin --install elasticsearch/marvel/latest
-
 ENV PATH /opt/kibana/bin:$PATH
+
+RUN kibana plugin --install elasticsearch/marvel/latest
 
 COPY ./docker-entrypoint.sh /
 
