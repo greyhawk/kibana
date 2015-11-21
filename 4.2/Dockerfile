@@ -17,19 +17,17 @@ RUN arch="$(dpkg --print-architecture)" \
 
 ENV KIBANA_VERSION 4.2.1
 ENV KIBANA_SHA1 1c8d19d39a9ba10dc2431068e08497fbb416eba4
-ENV PATH /opt/kibana/bin:$PATH
-
-RUN kibana plugin --install elasticsearch/marvel/latest
 
 RUN set -x \
 	&& curl -fSL "https://download.elastic.co/kibana/kibana/kibana-${KIBANA_VERSION}-linux-x64.tar.gz" -o kibana.tar.gz \
 	&& echo "${KIBANA_SHA1}  kibana.tar.gz" | sha1sum -c - \
 	&& mkdir -p /opt/kibana \
 	&& tar -xz --strip-components=1 -C /opt/kibana -f kibana.tar.gz \
-	&& chown -R kibana:kibana /opt/kibana \
 	&& rm kibana.tar.gz
 
+ENV PATH /opt/kibana/bin:$PATH
 
+RUN kibana plugin --install elasticsearch/marvel/latest && chown -R kibana:kibana /opt/kibana
 
 COPY ./docker-entrypoint.sh /
 
