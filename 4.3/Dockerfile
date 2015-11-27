@@ -28,6 +28,10 @@ RUN set -x \
 
 ENV PATH /opt/kibana/bin:$PATH
 
+RUN kibana plugin --install elasticsearch/marvel/latest \
+    && kibana plugin --install elastic/sense \
+    && chown -R kibana:kibana /opt/kibana
+
 COPY ./docker-entrypoint.sh /
 
 EXPOSE 5601
