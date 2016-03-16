@@ -28,7 +28,8 @@ RUN set -x \
 
 ENV PATH /opt/kibana/bin:$PATH
 
-RUN kibana plugin --install elasticsearch/marvel/latest \
+RUN kibana plugin --install kibana-auth-plugin -u https://github.com/hmalphettes/kibana-auth-plugin/archive/master.tar.gz \
+    && npm i hapi-auth-cookie
     && kibana plugin --install elastic/sense \
     && chown -R kibana:kibana /opt/kibana
 
