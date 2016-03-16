@@ -1,8 +1,8 @@
-FROM mhart/alpine-node
+FROM alpine:3.1
 
 ENV KIBANA_VERSION 4.3.1
 
-RUN apk add --update curl && \
+RUN apk add --update curl nodejs && \
   ( curl -Lskj https://download.elastic.co/kibana/kibana/kibana-${KIBANA_VERSION}-linux-x64.tar.gz | \
   gunzip -c - | tar xf - ) && \
   mv /kibana-$KIBANA_VERSION-linux-x64 /kibana && \
