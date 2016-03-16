@@ -7,12 +7,13 @@ RUN apk add --update curl nodejs && \
   gunzip -c - | tar xf - ) && \
   mv /kibana-$KIBANA_VERSION-linux-x64 /kibana && \
   rm -rf /kibana/node && \
-  rm /kibana/bin/*.bat && \
-  cd /kibana
+  rm /kibana/bin/*.bat
+
+ENV PATH /kibana/bin:$PATH
 
 RUN npm i hapi-auth-cookie
-RUN bin/kibana plugin --install elastic/sense
-RUN bin/kibana plugin --install kibana-auth-plugin -u https://github.com/hmalphettes/kibana-auth-plugin/archive/master.tar.gz
+RUN kibana plugin --install elastic/sense
+RUN kibana plugin --install kibana-auth-plugin -u https://github.com/hmalphettes/kibana-auth-plugin/archive/master.tar.gz
 RUN apk del curl
 RUN rm -rfv /var/cache/apk/* /tmp/* /var/tmp/* /root/.npm
 
